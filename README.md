@@ -11,7 +11,7 @@
   * [API (ver. 1.0) - Diseño de documentos (registros)](#api--ver-10----dise-o-de-documentos--registros-)
     + [**Diseño del documento** - Modelo Articulo](#--dise-o-del-documento-----modelo-articulo)
   * [API (ver. 1.0) - Métodos de uso](#api--ver-10----m-todos-de-uso)
-  * [Documento Artículos](#documento-art-culos)
+  * [Documento Artículos](#documento-artículos)
   * [Solicitudes](#solicitudes)
     + [Obtención de TODOS los documentos](#obtenci-n-de-todos-los-documentos)
     + [Obtención de documentos con filtros y/u opciones](#obtenci-n-de-documentos-con-filtros-y-u-opciones)
