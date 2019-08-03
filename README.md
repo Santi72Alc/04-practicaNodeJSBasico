@@ -21,7 +21,6 @@
     + [**Borrado de un documento**](#borrado-de-un-documento)
   * [Errores en la petición](#errores-en-la-petición)
     + [Error en solicitud de consulta, modificación o borrado de un documento](#error-en-solicitud-de-consulta-modificación-o-borrado-de-un-documento)
-    + [myShop](#myshop)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
