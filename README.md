@@ -8,7 +8,7 @@
 - 
   * [Requerimientos de uso](#requerimientos-de-uso)
   * [Inicializando la BD y creando ejemplos](#inicializando-la-bd-y-creando-ejemplos)
-  * [API (ver. 1.0) - Diseño de documentos (registros)](#api--ver-10----dise-o-de-documentos--registros-)
+  * [API (ver. 1.0) - Diseño de documentos (registros)](#api--ver-10---diseño-de-documentos-registros)
     + [**Diseño del documento** - Modelo Articulo](#--dise-o-del-documento-----modelo-articulo)
   * [API (ver. 1.0) - Métodos de uso](#api--ver-10----m-todos-de-uso)
   * [Documento Artículos](#documento-artículos)
