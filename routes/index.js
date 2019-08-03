@@ -14,9 +14,6 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/info', function (req, res, next) {
-  res.render('/README.md');
-});
 
 /**
  * Para versiones futuras de DEMO WEB
