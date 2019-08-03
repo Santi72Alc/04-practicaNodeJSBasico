@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Bicicleta",
+        "sale": true,
+        "price": 229.90,
+        "picture": "../public/images/bicicleta.png",
+        "tags": ["lifestyle", "work"]
+    },
+    {
+        "name": "Bicicleta Clásica",
+        "sale": true,
+        "price": 249.50,
+        "picture": "../public/images/bicicleta.jpg",
+        "tags": ["lifestyle"]
+    },
+    {
+        "name": "  iPhone 3G  ",
+        "sale": false,
+        "price": "58.90",
+        "picture": "../public/images/iphone3G.jpg",
+        "tags": ["work", "lifestyle", "mobile"]
+    },
+    {
+        "name": "Tablet 10pulg.  ",
+        "sale": true,
+        "price": 108.15,
+        "picture": "../public/images/TabletNexus_10.png",
+        "tags": ["work", "mobile"]
+    },
+    {
+        "name": "Samsung S7",
+        "sale": true,
+        "price": 430.90,
+        "picture": "../public/images/samsung_S7.jpg",
+        "tags": ["work", "mobile"]
+    },
+    {
+        "name": "Libro BigData V1 ",
+        "sale": false,
+        "price": 29.95,
+        "picture": "../public/images/libroBigData.jpeg",
+        "tags": ["work", "mobile"]
+    }
+]
