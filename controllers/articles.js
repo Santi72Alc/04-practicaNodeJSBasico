@@ -39,15 +39,15 @@ async function findFilter(req, res, next) {
         const sort = req.query.sort;
 
         // Param. para crear el filtro
-        if (name) { filter.name = name; };
+        if (name) { filter.name = name; }
 
         // Filtro de sale (puede ser true or false)
         if (sale) {
-            sale = sale.toLowerCase()
+            sale = sale.toLowerCase();
             if (["true", "false"].includes(sale)) {
                 filter.sale = sale;
-            };
-        };
+            }
+        }
 
         // Preparamos el filtro del precio
         if (price) {
@@ -79,7 +79,7 @@ async function findFilter(req, res, next) {
             tags = tags.toLowerCase().split(" ");
             console.log(tags);
             filter.tags = tags
-        };
+        }
 
         let cont = 0;
         console.log(filter);
@@ -181,7 +181,7 @@ async function deleteId(req, res, next) {
 function parseDocument(document) {
     let data = new Articles({
         name: (document.name).trim(),
-        sale: ["true", "false"].includes(document.sale) ? document.sale : false,
+        sale: ["true", "false"].includes(document.sale) ? document.sale : "false",
         price: parseFloat(document.price),
         picture: (document.picture).trim(),
         tags: []
