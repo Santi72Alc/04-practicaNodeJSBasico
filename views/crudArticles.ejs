@@ -1,0 +1,135 @@
+<% include ./partials/_header %>
+
+    <div class="container-fluid">
+            <!-- <div class="container-fluid">  -->
+        <div class="row">
+            <div class="col-md-7">       <!-- Lado Izquierdo (busqueda) -->
+                <!-- Bloque de búsqueda -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Búsqueda/Filtrado de documentos</h2>
+                        <!-- Formulario de búsqueda -->
+                        <form action="/view" >
+                            <div>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <th>Filtro</th>
+                                        <!-- <th>Comienzo</th> -->
+                                        <th>Límites</th>
+                                        <th>Skip</th>
+                                        <th>Campos</th>
+                                        <th>Ordenación</th>
+                                    </thead>
+                                    <tbody>
+                                        <td>
+                                            <div>
+                                                <input type="text" name="" value="">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <input type="number" name="" value="" min="0" max="9999">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="" value="" min="1" max="5">
+                                        </td>
+                                        <td>
+                                            <select multiple id="campos">
+                                                <<option value=""></option>
+                                                <option value="name">Nombre</option>
+                                                <option value="-name">-Nombre</option>
+                                                <option value="price">Precio</option>
+                                                <option value="-price">-Precio</option>
+                                                <option value="sale">Venta</option>
+                                                <option value="-sale">-Venta</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                        <input type="text" name="" value="">
+                                        </td>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                                    <label class="ml-2">Filtro a ejecutar : </label><span id="resFiltro"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>                
+                </div>
+            </div>
+            <!-- Form -->
+            <div class="col-md-5">      <!-- Lado Derecho (Entrada datos) --> 
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Entrada de artículos</h2>
+                        <form action="/crud/add" method="POST">
+                            <div class="form-group">
+                                <label for="name">Nombre</label>
+                                <input type="text" name="name" value="" placeholder="Inserte un nombre" required class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Precio</label>
+                                <input type="number" required name="price" 
+                                    placeholder="0.00" min="0" value="" step="any" 
+                                    title="Currency" pattern="^\d+(?:\.\d{1,2})?$" 
+                                    onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value) ? 'inherit' : 'red'">
+                                <!-- <input type="number" name="price" value="" min="0.00" max="99999.99" placeholder="Inserte el precio" class="form-control">  -->
+                            </div>
+                            <div class="form-group">
+                                <label for="picture">Foto</label>
+                                <input type="file" name="picture" value="" placeholder="Seleccione una foto" class="form-control">
+                            </div>
+                            <div class="from-group">
+                                <label for="sale">En venta</label>
+                                    <input type="checkbox" name="sale" value="true" checked class="checkbox">
+                            </div>
+                            <div class="from-group">
+                                <label for="tags">Etiquetas</label>
+                                    <select multiple name="tags" class="selectpicker">
+                                        <option>work</option>
+                                        <option>lifestyle</option>
+                                        <option>motor</option>
+                                        <option>mobile</option>
+                                    </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-block">Grabar artículo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- List -->
+    <div class="container resultados">
+        <h2 class="text-center">Resultados</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="bg-dark text-light">
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Venta</th>
+                <th>Acción</th>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<result.length; i++) { %>
+                    <tr>
+                        <td><%= result[i]._id %></td>
+                        <td><%= result[i].name %></td>
+                        <td><%= result[i].price %></td>
+                        <td><%= result[i].sale %></td>
+                        <td>
+                        <a href="/view/result[i]_id" class=" btn btn-info">ver</a>
+                        <a href="/crud/delete/<%= result[i]._id %>" class="btn btn-danger">Borrar</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+<% include ./partials/_footer %>
