@@ -22,22 +22,17 @@
                                     <tbody>
                                         <td>
                                             <div>
-                                                <select name="filter">
-                                                    <option value=""></option>
-                                                    <option value="name">Nombre</option>
-                                                    <option value="price">Precio</option>
-                                                    <option value="sale">Venta</option>
-                                            </select>
-                                                <input type="text" name="txtfilter" value="">
+                                                <label for="txtfilter">[name, price, sale, tags]</label>
+                                                <input type="text" name="txtfilter">
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="number" name="limit" value="" min="0" max="9999">
+                                                <input type="number" name="limit" min="0" max="9999">
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="number" name="skip" value="" min="1" max="5">
+                                            <input type="number" name="skip" min="1" max="5">
                                         </td>
                                         <td>
                                             <select multiple name="fields">

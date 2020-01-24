@@ -29,12 +29,24 @@ router.post('/crud/filter', async function(req, res, next) {
     console.log(req.body);
     let filter = {};
     let limit, skip, fields, sort;
-    if (req.body.limit) { let limit = req.body.limit };
-    if (req.body.skip) { skip = req.body.skip };
-    if (req.body.fields) { fields = req.body.fields };
-    if (req.body.sort) { sort = req.body.sort };
+    if (req.body.limit) { limit = req.body.limit; };
+    if (req.body.skip) { skip = req.body.skip; };
+    if (req.body.fields) { fields = req.body.fields; };
+    if (req.body.sort) { sort = req.body.sort; };
 
-    if (req.body.filter) { filter = { "filter": req.body.filter + "=" + req.body.txtfilter } };
+    if (req.body.txtfilter) {
+        let arrCampos, campo;
+        arrCampos = (req.body.txtfilter).split("&");
+        for(let i=0; i<arrCampos.length; i++) {
+            campo = arrCampos[i].split("=");
+            campo[0] = campo[0].toLowerCase();
+            if ( ['name', 'price', 'sale', 'tags'].includes(campo[0])) {
+                filter[campo[0]] = campo[1];
+            }
+        }
+        console.log("Campos = ", arrCampos);
+        console.log("filtro = ", filter);
+    };
 
     console.log("filtro = ", filter);
     const consult = await Articles.list({ filter, limit, skip, fields, sort });
