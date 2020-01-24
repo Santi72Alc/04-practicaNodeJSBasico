@@ -1,78 +1,60 @@
 'use strict';
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const Articles = require('../models/Articles');
 
 
-// Creamos algunos ejemplos del modelo 'Articles'
-// return: array de articles
-function makeExamples() {
-    // Model Article
-    const articles = [];
-    const examples = require('../lib/articles.json');       // JSON de ejemplo
+// Read the examples
+const readExamples = async () => {
+    return await require('../lib/articles.json');
+}
+
+
+
+// Create the elements
+const createArticles = async ( documents ) => {
     let cont = 0;
-    examples.forEach( (article) => {
-        Articles.create( parseDocument(article), (err, docum ) => {
-            if (err) {
-                console.log('Error saving the example', err);
-            }
-            else {
-                articles.push(docum);
-                cont++;
-                console.log(`Example saved #${cont}`);
-            }
-        });
-    });
-
-
-    // for (let i=0; i<examples.length; i++) {
-    // }
-    return articles;
+    let article;
+    for (const document of documents) {
+        try {
+            article = Articles.parseDocument( document );
+            await Articles.create( article );
+            cont++;
+        } catch (error) {
+            console.error(`Error creating article :\n${error}`);
+        }
+    }
+    return cont;
 }
-
-
-// Parsea los datos del documento leídos a un 'Articulo'
-function parseDocument( document ) {
-    let data = new Articles( {
-        name: (document.name).trim(),
-        sale: document.sale === true ? true : false,
-        price: +(document.price),
-        picture: (document.picture).trim(),
-        tags: document.tags
-    });
-    return data;
-}
-
-
 
 
 /**
  * Función principal
  */
-function main() {
+
+// Creamos la función asíncrona y ejecutamos  ()()
+( async () => {
     try {
-        // let cont = 0;
-        let articles = [];
         let cnn = require('../lib/dbConnection');
-        cnn.once('open', () => {
-            require('../models/Articles');
-            mongoose.connection.dropDatabase();         // Borramos la BD
+        cnn.once('open', async () => {
             console.log("Deleting BD...");
-            articles = makeExamples();          // Grabamos los ejemplos
-            setTimeout(() => {
-                console.log(`Examples created #${articles.length}`);
-                console.log('Terminado!!');
-                cnn.close();
-            }, 400);
+            cnn.dropDatabase();             // Borramos la BD
+            console.log('Deleted!!');
+            
+            console.log("Reading examples...");
+            const examples = await readExamples();              // Leemos los ejemplos
+            console.log("Done!");
+
+            console.log("Saving articles...");
+            const numArticulos = await createArticles( examples );        // Grabamos los ejemplos
+            console.log("Done!");
+
+            console.log(`Artículos creados #${numArticulos}`);
+            console.log('Terminado!!');
+            cnn.close();     
         });
     } catch (err) {
-        console.log('Error reading the BD : ', err);
+        console.log('Error: ', err);
     }
-}
+})();
 
-
-
-
-
-// Ejecutamos la func. principal
-main();

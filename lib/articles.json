@@ -25,7 +25,7 @@
         "sale": true,
         "price": 108.15,
         "picture": "../public/images/TabletNexus_10.png",
-        "tags": ["work", "mobile"]
+        "tags": ["work", "lifestyle"]
     },
     {
         "name": "Samsung S7",
@@ -40,5 +40,12 @@
         "price": 29.95,
         "picture": "../public/images/libroBigData.jpeg",
         "tags": ["work", "mobile"]
+    },
+    {
+        "name": "Libro BigData V7 ",
+        "sale": false,
+        "price": 42.85,
+        "picture": "../public/images/libroBigData.jpeg",
+        "tags": ["lifestyle", "mobile"]
     }
 ]

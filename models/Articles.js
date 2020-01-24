@@ -1,5 +1,8 @@
 'use strict';
 
+// tags allowed
+const TAGS = ["work", "lifestyle", "motor", "mobile"];
+
 const mongoose = require('mongoose');
 
 
@@ -26,8 +29,9 @@ var ArticleSchema = new mongoose.Schema({
 });
 
 
+// List of articles with filter.. and differents options
 ArticleSchema.statics.list = function({ filter, start, limit, skip, fields, sort }) {
-    const query = Article.find(filter);
+    const query = Articles.find(filter);
     // if (start) { query.start( start ); };        // NO la encuentro en la documentación (asumo que es 'skip')
     if (limit) { query.limit(parseInt(limit)); };
     if (skip) { query.skip(parseInt(skip)); };
@@ -37,6 +41,26 @@ ArticleSchema.statics.list = function({ filter, start, limit, skip, fields, sort
 }
 
 
-const Article = mongoose.model('Article', ArticleSchema);
+// Parsea los datos del documento leídos a un 'articulo'
+ArticleSchema.statics.parseDocument = function( article ) {
+    let articleParsed = new Articles({
+        name: article.name.trim(),
+        sale: ["true", "false"].includes(article.sale) ? article.sale : "false",
+        price: parseFloat(article.price),
+        picture: (article.picture).trim(),
+        tags: []
+    });
+    // Comprobamos que tenga las etiquetas correctas
+    for (let i = 0; i < article.tags.length; i++) {
+        if (TAGS.includes(article.tags[i])) {
+            articleParsed.tags.push(article.tags[i]);
+        }
+    }
+    return articleParsed;
+}
 
-module.exports = Article;
+
+
+const Articles = mongoose.model('Articles', ArticleSchema);
+
+module.exports = Articles;

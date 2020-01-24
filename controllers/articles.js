@@ -3,7 +3,6 @@
 // const mongoose = require('mongoose');
 
 const Articles = require('../models/Articles');
-const TAGS = ["work", "lifestyle", "motor", "mobile"];
 
 // Devolvemos TODOS los artículosd de la BD
 async function findAll(req, res, next) {
@@ -175,27 +174,6 @@ async function deleteId(req, res, next) {
         next(err);
     }
 }
-
-
-// Parsea los datos del documento leídos a un 'Articulo'
-function parseDocument(document) {
-    let data = new Articles({
-        name: (document.name).trim(),
-        sale: ["true", "false"].includes(document.sale) ? document.sale : "false",
-        price: parseFloat(document.price),
-        picture: (document.picture).trim(),
-        tags: []
-    });
-    // Comprobamos que tenga las etiquetas correctas
-    for (let i = 0; i < document.tags.length; i++) {
-        console.log(document.tags[i]);
-        if (TAGS.includes(document.tags[i])) {
-            data.tags.push(document.tags[i]);
-        }
-    }
-    return data;
-}
-
 
 
 
