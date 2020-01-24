@@ -12,13 +12,13 @@ const readExamples = async () => {
 
 
 // Create the elements
-const createArticles = async ( documents ) => {
+const createArticles = async (documents) => {
     let cont = 0;
     let article;
     for (const document of documents) {
         try {
-            article = Articles.parseDocument( document );
-            await Articles.create( article );
+            article = Articles.parseDocument(document);
+            await Articles.create(article);
             cont++;
         } catch (error) {
             console.error(`Error creating article :\n${error}`);
@@ -33,25 +33,25 @@ const createArticles = async ( documents ) => {
  */
 
 // Creamos la función asíncrona y ejecutamos  ()()
-( async () => {
+(async () => {
     try {
         let cnn = require('../lib/dbConnection');
         cnn.once('open', async () => {
             console.log("Deleting BD...");
             cnn.dropDatabase();             // Borramos la BD
             console.log('Deleted!!');
-            
+
             console.log("Reading examples...");
             const examples = await readExamples();              // Leemos los ejemplos
             console.log("Done!");
 
             console.log("Saving articles...");
-            const numArticulos = await createArticles( examples );        // Grabamos los ejemplos
+            const numArticulos = await createArticles(examples);        // Grabamos los ejemplos
             console.log("Done!");
 
             console.log(`Artículos creados #${numArticulos}`);
             console.log('Terminado!!');
-            cnn.close();     
+            cnn.close();
         });
     } catch (err) {
         console.log('Error: ', err);
