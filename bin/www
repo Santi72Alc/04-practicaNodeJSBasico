@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
+// Preparamos las variables de entorno
+require('dotenv').config();
+
+
 /**
  * Module dependencies.
  */
-
 var app = require('../app');
 var debug = require('debug')('myshop:server');
 var http = require('http');
 
-// Preparamos las variables de entorno
-require('dotenv/config');
 
 
 /**
@@ -30,7 +31,7 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen( app.get('port') );
+server.listen(app.get('port'));
 server.on('error', onError);
 server.on('listening', onListening);
 
