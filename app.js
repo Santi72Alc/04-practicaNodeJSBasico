@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.set('useFindAndModify', false);
-mongoose.set('useUnifiedTopology', true)
+mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
 
 
