@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <h2>Búsqueda/Filtrado de documentos</h2>
                         <!-- Formulario de búsqueda -->
-                        <form action="/view" >
+                        <form action="/crud/view" >
                             <div>
                                 <table class="table table-bordered table-hover">
                                     <thead>
@@ -23,20 +23,29 @@
                                     <tbody>
                                         <td>
                                             <div>
-                                                <input type="text" name="" value="">
+                                                <select id="name" name="campo">
+                                                    <option value=""></option>
+                                                    <option value="name">Nombre</option>
+                                                    <option value="-name">-Nombre</option>
+                                                    <option value="price">Precio</option>
+                                                    <option value="-price">-Precio</option>
+                                                    <option value="sale">Venta</option>
+                                                    <option value="-sale">-Venta</option>
+                                            </select>
+                                                <input type="text" name="txtName" value="">
                                             </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input type="number" name="" value="" min="0" max="9999">
+                                                <input type="number" name="limit" value="" min="0" max="9999">
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="number" name="" value="" min="1" max="5">
+                                            <input type="number" name="skip" value="" min="1" max="5">
                                         </td>
                                         <td>
-                                            <select multiple id="campos">
-                                                <<option value=""></option>
+                                            <select multiple id="fields">
+                                                <option value=""></option>
                                                 <option value="name">Nombre</option>
                                                 <option value="-name">-Nombre</option>
                                                 <option value="price">Precio</option>
@@ -46,13 +55,20 @@
                                             </select>
                                         </td>
                                         <td>
-                                        <input type="text" name="" value="">
+                                            <select id="sort">
+                                                <option value=""></option>
+                                                <option value="name">Nombre</option>
+                                                <option value="-name">-Nombre</option>
+                                                <option value="price">Precio</option>
+                                                <option value="-price">-Precio</option>
+                                                <option value="sale">Venta</option>
+                                                <option value="-sale">-Venta</option>
+                                            </select>
                                         </td>
                                     </tbody>
                                 </table>
                                 <div>
                                     <button type="submit" class="btn btn-primary">Filtrar</button>
-                                    <label class="ml-2">Filtro a ejecutar : </label><span id="resFiltro"></span>
                                 </div>
                             </div>
                         </form>
@@ -123,7 +139,7 @@
                         <td><%= result[i].price %></td>
                         <td><%= result[i].sale %></td>
                         <td>
-                        <a href="/view/result[i]_id" class=" btn btn-info">ver</a>
+                        <a href="/crud/view/<%= result[i]._id %>" class=" btn btn-info">Ver</a>
                         <a href="/crud/delete/<%= result[i]._id %>" class="btn btn-danger">Borrar</a>
                         </td>
                     </tr>
