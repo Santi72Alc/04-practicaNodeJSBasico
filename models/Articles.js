@@ -15,7 +15,7 @@ var ArticleSchema = new mongoose.Schema({
     price: {
         type: Number,
         default: 0.0,
-        min:0.0,
+        min: 0.0,
         max: 99999.0
     },
     picture: String,
@@ -26,13 +26,13 @@ var ArticleSchema = new mongoose.Schema({
 });
 
 
-ArticleSchema.statics.list = function( { filter, start, limit, skip, fields, sort }) {
-    const query = Article.find( filter );
+ArticleSchema.statics.list = function({ filter, start, limit, skip, fields, sort }) {
+    const query = Article.find(filter);
     // if (start) { query.start( start ); };        // NO la encuentro en la documentación (asumo que es 'skip')
-    if (limit) { query.limit( parseInt(limit) ); };
-    if (skip) { query.skip( parseInt(skip) ); };
-    query.select( fields );
-    if (sort) { query.sort( sort ); };
+    if (limit) { query.limit(parseInt(limit)); };
+    if (skip) { query.skip(parseInt(skip)); };
+    query.select(fields);
+    if (sort) { query.sort(sort); };
     return query.exec();
 }
 

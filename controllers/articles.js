@@ -54,7 +54,8 @@ async function findFilter(req, res, next) {
             let myObjFiltroPrice = {};
             price = price.split("-");
             // Sólo hemos pasado un precio para el filtro
-            if (price.length == 1) { filter.price = price[0]; } else {
+            if (price.length == 1) { filter.price = price[0]; }
+            else {
                 // Hay comparación de precios
                 console.log('Long: ', price.length);
                 console.log('price :', price);

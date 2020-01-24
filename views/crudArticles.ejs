@@ -9,12 +9,11 @@
                     <div class="card-body">
                         <h2>Búsqueda/Filtrado de documentos</h2>
                         <!-- Formulario de búsqueda -->
-                        <form action="/crud/view" >
+                        <form action="/crud/filter" method="POST">
                             <div>
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <th>Filtro</th>
-                                        <!-- <th>Comienzo</th> -->
                                         <th>Límites</th>
                                         <th>Skip</th>
                                         <th>Campos</th>
@@ -23,16 +22,13 @@
                                     <tbody>
                                         <td>
                                             <div>
-                                                <select id="name" name="campo">
+                                                <select name="filter">
                                                     <option value=""></option>
                                                     <option value="name">Nombre</option>
-                                                    <option value="-name">-Nombre</option>
                                                     <option value="price">Precio</option>
-                                                    <option value="-price">-Precio</option>
                                                     <option value="sale">Venta</option>
-                                                    <option value="-sale">-Venta</option>
                                             </select>
-                                                <input type="text" name="txtName" value="">
+                                                <input type="text" name="txtfilter" value="">
                                             </div>
                                         </td>
                                         <td>
@@ -44,7 +40,7 @@
                                             <input type="number" name="skip" value="" min="1" max="5">
                                         </td>
                                         <td>
-                                            <select multiple id="fields">
+                                            <select multiple name="fields">
                                                 <option value=""></option>
                                                 <option value="name">Nombre</option>
                                                 <option value="-name">-Nombre</option>
@@ -55,7 +51,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select id="sort">
+                                            <select name="sort">
                                                 <option value=""></option>
                                                 <option value="name">Nombre</option>
                                                 <option value="-name">-Nombre</option>
@@ -70,7 +66,7 @@
                                 <div>
                                     <button type="submit" class="btn btn-primary">Filtrar</button>
                                 </div>
-                            </div>
+                            </div> 
                         </form>
                     </div>                
                 </div>
@@ -87,11 +83,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="price">Precio</label>
-                                <input type="number" required name="price" 
-                                    placeholder="0.00" min="0" value="" step="any" 
-                                    title="Currency" pattern="^\d+(?:\.\d{1,2})?$" 
-                                    onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value) ? 'inherit' : 'red'">
-                                <!-- <input type="number" name="price" value="" min="0.00" max="99999.99" placeholder="Inserte el precio" class="form-control">  -->
+                                <input type="number" name="price" value="" min="0.00" max="99999.99"  step="any"
+                                    placeholder="Inserte el precio" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="picture">Foto</label>
