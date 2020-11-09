@@ -11,23 +11,72 @@ const ctrls = require('../controllers/articles');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+    res.render('indexWEB');
 });
 
 
 /**
- * Para versiones futuras de DEMO WEB
+ * Para versiones de DEMO WEB
  */
-// router.get('/crud', async function ( req, res, next) {
-//   const consult = await Articles.list({});
-//   console.log("Consulta: ", consult);
-//   res.render('crudArticles', { result: consult });
-// });
+// Para la ventanta principal del CRUD
+router.get('/crud', async function(req, res, next) {
+    const consult = await Articles.list({});
+    res.render('crudArticles', { result: consult });
+});
 
-// router.get('/crud/add', async function ( req, res, next) {
-//   const body = req.body;
-//   console.log("adding: ", body);
-// });
+// Filtrado de artículos
+router.post('/crud/filter', async function(req, res, next) {
+    console.log(req.body);
+    let filter = {};
+    let limit, skip, fields, sort;
+    if (req.body.limit) { limit = req.body.limit; };
+    if (req.body.skip) { skip = req.body.skip; };
+    if (req.body.fields) { fields = req.body.fields; };
+    if (req.body.sort) { sort = req.body.sort; };
+
+    if (req.body.txtfilter) {
+        let arrCampos, campo;
+        arrCampos = (req.body.txtfilter).split("&");
+        for(let i=0; i<arrCampos.length; i++) {
+            campo = arrCampos[i].split("=");
+            campo[0] = campo[0].toLowerCase();
+            if ( ['name', 'price', 'sale', 'tags'].includes(campo[0])) {
+                filter[campo[0]] = campo[1];
+            }
+        }
+        console.log("Campos = ", arrCampos);
+        console.log("filtro = ", filter);
+    };
+
+    console.log("filtro = ", filter);
+    const consult = await Articles.list({ filter, limit, skip, fields, sort });
+    res.render('crudArticles', { result: consult });
+});
+
+
+// Para añadir el registro
+router.post('/crud/add', async function(req, res, next) {
+    ctrls.add(req, res, next);
+    res.redirect('/crud');
+});
+
+// Para borrar el registro
+router.get('/crud/delete/:id', async function(req, res, next) {
+    const { id } = req.params;
+    await Articles.deleteOne({ _id: id }).exec();
+    res.redirect('/crud');
+})
+
+
+// Para ver el registro
+router.get('/crud/view/:id', async function(req, res, next) {
+    const { id } = req.params;
+    const consult = await Articles.list({ filter: { _id: id } });
+    res.render('viewArticle', { result: consult });
+})
+
+
+
 
 
 module.exports = router;

@@ -12,19 +12,20 @@ const readExamples = async () => {
 
 
 // Create the elements
-const createArticles = async (documents) => {
-    let cont = 0;
+const createArticles = async ( documents ) => {
+    let articles = [];
     let article;
+    let artSaved;
     for (const document of documents) {
         try {
-            article = Articles.parseDocument(document);
-            await Articles.create(article);
-            cont++;
+            article = Articles.parseDocument( document );
+            artSaved = await Articles.create( article );
+            articles.push( artSaved );
         } catch (error) {
-            console.error(`Error creating article :\n${error}`);
+            console.error(`Error creating article :\n${article}\n${error}`);
         }
     }
-    return cont;
+    return articles;
 }
 
 
@@ -33,25 +34,26 @@ const createArticles = async (documents) => {
  */
 
 // Creamos la función asíncrona y ejecutamos  ()()
-(async () => {
+( async () => {
     try {
         let cnn = require('../lib/dbConnection');
-        cnn.once('open', async () => {
+        cnn.once('open', async _ => {
             console.log("Deleting BD...");
             cnn.dropDatabase();             // Borramos la BD
             console.log('Deleted!!');
-
             console.log("Reading examples...");
             const examples = await readExamples();              // Leemos los ejemplos
             console.log("Done!");
-
+            // ---> Hasta aquí funciona!!!
             console.log("Saving articles...");
-            const numArticulos = await createArticles(examples);        // Grabamos los ejemplos
+            const articles = await createArticles( examples );        // Grabamos los ejemplos
             console.log("Done!");
 
-            console.log(`Artículos creados #${numArticulos}`);
+            // Crea los articulos pero no hace el await
+            // SIGUE inmediatamente por estas dos líneas y no hace el await
+            console.log(`Artículos creados #${articles.length}`);
             console.log('Terminado!!');
-            cnn.close();
+            cnn.close();     
         });
     } catch (err) {
         console.log('Error: ', err);

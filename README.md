@@ -41,7 +41,7 @@ Para crear la BD y algunos ejemplos
 <pre>$> npm run installDB</pre>
 
 Será creada la BD 'shop' y serán añadidos unos cuantos ejemplos a la misma.  
-Los ejemplos utilizados son leídos y cargados desde el archivo [./bin/articulos.json](./lib/articles.json).
+Los ejemplos utilizados son leídos y cargados desde el archivo [./lib/articulos.json](./lib/articles.json).
 
 
 ---
@@ -55,25 +55,25 @@ Durante este manual se hará referencia a 'documento' como el conocido por otros
 ### **Diseño del documento** - Modelo Articulo
 <pre>
 Articulo = {
-            name: {
-                type: String,
-                required: true
-            },
-            sale: {
-                type: Boolean,
-                default: true
-            },
-            price: {
-                type: Number,
-                default: 0.0,
-                min: 0.0,
-                max: 9999.0
-            },
-            picture: String,
-            tags: {
-                type: [String],
-                enum: ['work', 'lifestyle', 'motor','mobile']
-        }
+    name: {
+        type: String,
+        required: true
+    },
+    sale: {
+        type: Boolean,
+        default: true
+    },
+    price: {
+        type: Number,
+        default: 0.0,
+        min: 0.0,
+        max: 9999.0
+    },
+    picture: String,
+    tags: {
+        type: [String],
+        enum: ['work', 'lifestyle', 'motor','mobile']
+}
 </pre>
 Los datos serán grabados en la BD con este diseño de documento.  
 Se incluyen algunas 'condiciones y/o validaciones' de los campos en el propio modelo.  

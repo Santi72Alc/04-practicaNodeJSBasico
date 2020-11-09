@@ -3,20 +3,19 @@
 // const mongoose = require('mongoose');
 
 const Articles = require('../models/Articles');
-const TAGS = [ "work", "lifestyle", "motor", "mobile"] ;
 
 // Devolvemos TODOS los artículosd de la BD
-async function findAll( req, res, next ) {
+async function findAll(req, res, next) {
     try {
         let cont = 0;
         console.log(`* Reading documents`);
-        const articles = await Articles.list( {} );
+        const articles = await Articles.list({});
         console.log(`Docs. readed : #${articles.length}`);
         articles.forEach(element => {
             cont++;
             console.log(`Doc. #${cont} id: ${element._id}`);
-        }); 
-        res.json( {success: true, result: articles});
+        });
+            res.json({ success: true, result: articles });
     } catch (err) {
         console.log(`Error reading documents`);
         next(err);
@@ -25,12 +24,12 @@ async function findAll( req, res, next ) {
 
 
 // Devolvemos los documentos filtrados por la query pasada
-async function findFilter( req, res, next ) {
+async function findFilter(req, res, next) {
     try {
         // Recogemos los parámetros pasados
         const name = req.query.name;
         let sale = req.query.sale;
-        let price  = req.query.price;
+        let price = req.query.price;
         let tags = req.query.tags;
         const filter = {};
         const skip = req.query.skip;
@@ -39,18 +38,18 @@ async function findFilter( req, res, next ) {
         const sort = req.query.sort;
 
         // Param. para crear el filtro
-        if (name) { filter.name = name; };
+        if (name) { filter.name = name; }
 
         // Filtro de sale (puede ser true or false)
-        if (sale) { 
-            sale = sale.toLowerCase()
+        if (sale) {
+            sale = sale.toLowerCase();
             if (["true", "false"].includes(sale)) {
-                filter.sale = sale; 
-            };
-        };
+                filter.sale = sale;
+            }
+        }
 
         // Preparamos el filtro del precio
-        if (price) { 
+        if (price) {
             let myObjFiltroPrice = {};
             price = price.split("-");
             // Sólo hemos pasado un precio para el filtro
@@ -60,14 +59,14 @@ async function findFilter( req, res, next ) {
                 console.log('Long: ', price.length);
                 console.log('price :', price);
                 if (price.length == 2) {
-                    if (price[0] === '') { myObjFiltroPrice['$lte'] = price[1]; }       // -price
+                    if (price[0] === '') { myObjFiltroPrice['$lte'] = price[1]; } // -price
                     else {
-                        if (price[1] === '') { myObjFiltroPrice['$gte'] = price[0]; }   // price-
-                        else { 
-                            myObjFiltroPrice['$gte'] = price[1];                        // priceA-priceB
+                        if (price[1] === '') { myObjFiltroPrice['$gte'] = price[0]; } // price-
+                        else {
+                            myObjFiltroPrice['$gte'] = price[1]; // priceA-priceB
                             myObjFiltroPrice['$lte'] = price[2];
                         }
-                    }   
+                    }
                 }
                 console.log('Filtro price : ', myObjFiltroPrice);
                 filter.price = myObjFiltroPrice;
@@ -75,24 +74,24 @@ async function findFilter( req, res, next ) {
         }
 
         // Comprobamos las etiquetas buscadas
-        if (tags) { 
+        if (tags) {
             tags = tags.toLowerCase().split(" ");
             console.log(tags);
             filter.tags = tags
-        };
-        
+        }
+
         let cont = 0;
         console.log(filter);
         console.log(`* Reading documents`);
         // Los controles de los parámetros se hacen en la función del modelo
-        const articles = await Articles.list( { filter, limit, skip, fields, sort } );
+        const articles = await Articles.list({ filter, limit, skip, fields, sort });
         console.log(`Docs. readed : #${articles.length}`);
         articles.forEach(element => {
             cont++;
             console.log(`Doc. #${cont} id: ${element._id}`);
-        }); 
-        res.json( {success: true, result: articles});
-        return;
+        });
+        res.json({ success: true, result: articles });
+        // return;
     } catch (err) {
         console.log(`Error reading documents`, err);
         next(err);
@@ -102,7 +101,7 @@ async function findFilter( req, res, next ) {
 
 
 // Encontramos 1 articulo por Id
-async function findById( req, res, next ) {
+async function findById(req, res, next) {
     try {
         console.log(`* Looking for document`);
         const _id = req.params.id;
@@ -112,45 +111,44 @@ async function findById( req, res, next ) {
             return;
         }
         console.log(`Document found - id: ${_id}`);
-            res.json({ success: true, result: article });
-        
+        res.json({ success: true, result: article });
+
     } catch (err) {
         console.log(`Error looking for document - id: ${_id}`);
-        next (err);
+        next(err);
     }
 }
 
 
 // Encontramos 1 articulo por Id
-async function modifyId( req, res, next ) {
+async function modifyId(req, res, next) {
     try {
         console.log(`* Modifying document`);
         const _id = req.params.id;
         const data = req.body;
-        const articleSaved = await Articles.findOneAndUpdate( {_id: _id}, data, { new: true, useFindAndModify:true }).exec();
+        const articleSaved = await Articles.findOneAndUpdate({ _id: _id }, data, { new: true, useFindAndModify: true }).exec();
         // new: true --> hace que el metodo devuelva el registro grabado
         console.log(`Document saved - id: ${articleSaved._id}`);
-        res.json( { success: true, result: articleSaved } );
-        return;
-
+        res.json({ success: true, result: articleSaved });
+        // return;
     } catch (err) {
         console.log(`Error saving document - id: ${_id}`);
-        next( err );
+        next(err);
     }
 }
 
 
 // Añadimos el articulo pasado por 'body'
-async function add( req, res, next ) {
+async function add(req, res, next) {
     try {
         console.log(`* Adding document`);
-        let data = parseDocument( req.body );
+        let data = parseDocument(req.body);
         const document = new Articles(data);
 
         const articleSaved = await document.save();
         console.log(`Document add - id: ${articleSaved._id}`);
         res.json({ success: true, result: articleSaved });
-        return;
+        // return;
 
     } catch (err) {
         console.log('Error adding document - id: ${_id}');
@@ -159,45 +157,23 @@ async function add( req, res, next ) {
 }
 
 
-async function deleteId( req, res, next ) {
+async function deleteId(req, res, next) {
     const _id = req.params.id;
     try {
         console.log(`* Deleting document`);
-        const article = await Articles.deleteOne( { _id: _id }).exec();
+        const article = await Articles.deleteOne({ _id: _id }).exec();
         if (article && article.deletedCount > 0) {
             console.log(`Document deleted: ${_id}`);
-            res.json( { success: true, result: article });
-        }
-        else {
+            res.json({ success: true, result: article });
+        } else {
             console.log(`Document NO deleted - id: ${_id}`);
             res.json({ success: false });
         }
     } catch (err) {
         console.log(`Error deleting document - id: ${_id}`);
-        next( err );
+        next(err);
     }
 }
-
-
-// Parsea los datos del documento leídos a un 'Articulo'
-function parseDocument( document ) {
-    let data = new Articles( {
-        name: (document.name).trim(),
-        sale: ["true", "false"].includes(document.sale) ? document.sale : false,
-        price: parseFloat(document.price),
-        picture: (document.picture).trim(),
-        tags: []
-    });
-    // Comprobamos que tenga las etiquetas correctas
-    for(let i=0; i<document.tags.length; i++) {
-        console.log(document.tags[i]);
-        if (TAGS.includes(document.tags[i])) {
-            data.tags.push(document.tags[i]);
-        }
-    }
-    return data;
-}
-
 
 
 

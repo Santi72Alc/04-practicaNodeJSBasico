@@ -1,0 +1,23 @@
+<% include ./partials/_header %>
+
+        <div class="cabecera text-center">
+            <h1>Visionado de artículo</h1>
+        </div>
+        <div class="container">
+            <div class="mb-4">
+                <h2>Datos del artículo :</h2>
+                <span>ID      : <%= result[0]._id %></span><br>
+                <span>Nombre  : <%= result[0].name %></span><br>
+                <span>Precio  : <%= result[0].price %>€</span><br>
+                <span>Venta   : <%= result[0].sale %></span>
+            </div>
+            <div>
+                <a href="javascript:history.back(-1);" title="Ir la página anterior"
+                    class="btn btn-info">Volver</a>
+                <!-- 
+                <a href="/crud" class="btn btn-info">Volver</a>
+                -->
+            </div>
+        </div>
+    
+<% include ./partials/_footer %>
